@@ -39,8 +39,7 @@ const TripSchema = new mongoose.Schema(
     shareToken: {
     type: String,
     default: null,
-    unique: true,
-    sparse: true,
+    index: { unique: true, sparse: true },
     },
     isShared: {
     type: Boolean,

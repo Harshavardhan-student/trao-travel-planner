@@ -143,9 +143,8 @@ const shareTrip = async (req, res, next) => {
     if (!trip) return res.status(404).json({ success: false, error: 'Trip not found' });
     if (trip.user.toString() !== req.user.id) return res.status(403).json({ success: false, error: 'Not authorized' });
 
-    if (!trip.shareToken) {
-      trip.shareToken = crypto.randomBytes(16).toString('hex');
-    }
+    // Always generate a fresh token
+    trip.shareToken = crypto.randomBytes(16).toString('hex');
     trip.isShared = true;
     await trip.save();
 
