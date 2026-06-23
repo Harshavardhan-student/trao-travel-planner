@@ -10,11 +10,9 @@ const app = express();
 connectDB();
 
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'https://trao-travel-planner-eta.vercel.app'
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: function(origin, callback) {
+    callback(null, true);
+  },
   credentials: true
 }));
 
