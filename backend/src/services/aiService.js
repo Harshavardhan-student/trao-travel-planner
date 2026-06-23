@@ -53,9 +53,13 @@ Respond ONLY with a valid JSON object in this exact format, no extra text, no ma
   });
 
   const text = response.choices[0].message.content;
-  const clean = text.replace(/```json|```/g, '').trim();
+  let clean = text.replace(/```json/g, '').replace(/```/g, '').trim();
+  const start = clean.indexOf('{');
+  const end = clean.lastIndexOf('}');
+  clean = clean.substring(start, end + 1);
   return JSON.parse(clean);
 };
+
 const generateDay = async ({ destination, dayNumber, budgetType, interests, instruction }) => {
   const prompt = `You are an expert travel planner. Regenerate a single day itinerary.
 
@@ -83,9 +87,11 @@ Respond ONLY with a valid JSON object, no markdown:
   });
 
   const text = response.choices[0].message.content;
-  const clean = text.replace(/```json|```/g, '').trim();
+  let clean = text.replace(/```json/g, '').replace(/```/g, '').trim();
+  const start = clean.indexOf('{');
+  const end = clean.lastIndexOf('}');
+  clean = clean.substring(start, end + 1);
   return JSON.parse(clean);
 };
 
 module.exports = { generateItinerary, generateDay };
-module.exports = { generateItinerary };
